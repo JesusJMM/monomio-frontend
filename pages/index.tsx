@@ -17,7 +17,6 @@ export const getStaticProps: GetStaticProps = async () => {
 }
 
 const Home: NextPage<StaticProps> = (props) => {
-  console.log(props)
   return (
     <div>
       <Head>
