@@ -95,7 +95,7 @@ export const ArticleEntry: React.FC<
             </Link>
           )}
           <Link href={`/${authorName}/${slug}`} passHref>
-            <Title as={'a'} variant={'anchor'}>
+            <Title order='3' as={'a'} variant={'anchor'}>
               {title}
             </Title>
           </Link>

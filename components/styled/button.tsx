@@ -1,4 +1,4 @@
-import {styled } from '../../stitches.config'
+import { styled } from '../../stitches.config'
 
 export const Button = styled('button', {
   padding: '6px 12px',
@@ -9,9 +9,9 @@ export const Button = styled('button', {
   backgroundColor: '$gray5',
   fontFamily: `'Inter', sans-serif`,
   cursor: 'pointer',
-  '&:hover':{
+  '&:hover': {
     backgroundColor: '$gray6',
-    transform: 'translateY(-1px)'
+    transform: 'translateY(-1px)',
   },
   '&:active, &:focus': {
     outline: 'none',
@@ -21,11 +21,20 @@ export const Button = styled('button', {
       dark: {
         backgroundColor: '$gray12',
         color: 'white',
-        '&:hover':{
+        '&:hover': {
           backgroundColor: '$gray11',
           color: 'white',
-        }
-      }
-    }
-  }
+        },
+      },
+      blue: {
+        backgroundColor: '$blue9',
+        color: 'white',
+      },
+    },
+    size: {
+      md: {
+        fontSize: '14px',
+      },
+    },
+  },
 })

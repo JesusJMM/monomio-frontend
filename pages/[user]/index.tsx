@@ -54,7 +54,7 @@ export default function AuthorPage({ author, articles }: AuthorPagePropsType) {
     <Layout>
       <AuthorInfoContainer>
       <Avatar src={author.imgUrl} size='lg' />
-        <Title>{author.name}</Title>
+        <Title order='2'>{author.name}</Title>
       </AuthorInfoContainer>
       {articles.map((a) => (
         <ArticleEntry withoutAuthor {...a} key={a.id}/>

@@ -5,9 +5,6 @@ export const Title = styled('p', {
   fontWeight: 'bold',
   fontFamily: `'Inter'`,
   color: '$gray12',
-  '@bp1': {
-    fontSize: '1.8em',
-  },
   variants: {
     variant: {
       anchor: {
@@ -16,6 +13,34 @@ export const Title = styled('p', {
           cursor: 'pointer',
         },
       },
+    },
+    position: {
+      center: {
+        textAlign: 'center'
+      }
+    },
+    order: {
+      1: {
+        fontSize: 32,
+        '@bp1': {
+          fontSize: 44,
+        },
+      },
+      2: {
+        fontSize: 28,
+        '@bp1': {
+          fontSize: 38,
+        },
+      },
+      3: {
+        fontSize: 24,
+        '@bp1': {
+          fontSize: 30,
+        },
+      }
     }
-  }
+  },
+  defaultVariants: {
+    order: '1'
+  },
 })
