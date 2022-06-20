@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import * as React from 'react'
 import { styled } from "../../stitches.config";
 import { Button } from '../styled';
@@ -8,10 +9,11 @@ const Container = styled('div', {
   width: '100%',
   padding: '1em',
 })
-const Icon = styled('p', {
+const Icon = styled('a', {
   fontFamily: `'Inter', sans-serif`,
   fontWeight: 'bold',
   fontSize: '28px',
+  cursor: 'pointer',
   letterSpacing: '-1px',
 })
 const Flex = styled('div', {
@@ -23,7 +25,9 @@ const Flex = styled('div', {
 export const Header: React.FC = () => {
   return(
     <Container>
-    <Icon>Monomio</Icon>
+    <Link href={'/'} passHref>
+      <Icon>Monomio</Icon>
+    </Link>
       <Flex>
         <Button>Login</Button>
         <Button color='dark'>Signup</Button>
