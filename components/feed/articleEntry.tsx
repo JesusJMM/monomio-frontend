@@ -17,10 +17,11 @@ const Container = styled('div', {
   padding: '1em',
   display: 'flex',
   flexDirection: 'column',
-  margin: 'auto',
   marginBottom: '.5em',
   position: 'relative',
+  marginInline: '1em',
   '@bp1': {
+    marginInline: 'auto',
     maxWidth: 600,
   },
   borderBottom: '1px solid $gray7',
@@ -69,16 +70,10 @@ const Desc = styled('p', {
   color: '$gray11',
 })
 
-const Divider = styled('div', {
-  with: '100%',
-  borderTop: '1px solid $gray8',
-  marginBlock: '.5em',
-})
-
 const ContentContainer = styled('div', {
   display: 'flex',
   flexDirection: 'row-reverse',
-  gap: '.5em',
+  gap: '1em',
 })
 
 export const ArticleEntry: React.FC<
@@ -86,20 +81,19 @@ export const ArticleEntry: React.FC<
 > = ({ title, desc, slug, authorName, feedImg, authorImg, withoutAuthor }) => {
   return (
     <Container>
-      {withoutAuthor || (
-        <Link href={`/${authorName}`} passHref>
-        <AuthorContainer>
-          <Author>{authorName}</Author>
-          <Avatar src={authorImg} />
-        </AuthorContainer>
-        </Link>
-      )}
       <ContentContainer>
         <ImgContainer>
           <Img src={feedImg} />
         </ImgContainer>
-        <Divider />
         <div>
+          {withoutAuthor || (
+            <Link href={`/${authorName}`} passHref>
+            <AuthorContainer>
+              <Author>{authorName}</Author>
+              <Avatar src={authorImg} />
+            </AuthorContainer>
+            </Link>
+          )}
           <Link href={`/${authorName}/${slug}`} passHref>
             <Title as={'a'} variant={'anchor'}>
               {title}
