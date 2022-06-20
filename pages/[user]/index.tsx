@@ -1,6 +1,7 @@
 import { GetStaticPaths, GetStaticProps } from 'next'
 import { ArticleFeed, ArticleEntry } from '../../components/feed/articleEntry'
 import { Title, Avatar } from '../../components/styled'
+import Layout from '../../components/layout'
 import { styled } from '../../stitches.config'
 
 type Author = {
@@ -42,7 +43,7 @@ const AuthorInfoContainer = styled('div',{
   marginInline: 'auto',
   display: 'flex',
   flexDirection: 'column',
-  marginBlock: '2em',
+  marginBottom: '2em',
   justifyContent: 'center',
   alignItems: 'center',
   gap: '.5em',
@@ -50,7 +51,7 @@ const AuthorInfoContainer = styled('div',{
 
 export default function AuthorPage({ author, articles }: AuthorPagePropsType) {
   return (
-    <div>
+    <Layout>
       <AuthorInfoContainer>
       <Avatar src={author.imgUrl} size='lg' />
         <Title>{author.name}</Title>
@@ -58,6 +59,6 @@ export default function AuthorPage({ author, articles }: AuthorPagePropsType) {
       {articles.map((a) => (
         <ArticleEntry withoutAuthor {...a} key={a.id}/>
       ))}
-    </div>
+    </Layout>
   )
 }

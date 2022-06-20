@@ -1,8 +1,9 @@
 import { styled } from '../../stitches.config'
-import { Title, Avatar } from '../../components/styled'
+import { Title, Avatar, Container } from '../../components/styled'
 import { GetStaticPaths, GetStaticProps } from 'next'
 import { ArticleFeed } from '../../components/feed/articleEntry'
 import Link from 'next/link'
+import Layout from '../../components/layout'
 
 export type Article = ArticleFeed & {
   content: string
@@ -34,23 +35,18 @@ export const getStaticProps: GetStaticProps = async (ctx) => {
   }
 }
 
-const Content = styled('div', {
-  maxWidth: 600,
-  marginInline: 'auto',
-  marginBlock: '3em',
-})
 const AuthorInfo = styled('a', {
   display: 'flex',
   alignItems: 'center',
   gap: '.5em',
-  marginBlock: '1em',
+  marginBottom: '1em',
   '& p': {
     color: '$gray9',
-    cursor: 'pointer'
+    cursor: 'pointer',
   },
   '& p:hover': {
     textDecoration: 'underline',
-  }
+  },
 })
 const ImgContainer = styled('div', {
   display: 'grid',
@@ -59,6 +55,9 @@ const ImgContainer = styled('div', {
   overflow: 'hidden',
   borderRadius: '8px',
   marginBlock: '1em',
+  '& img':{
+    width: '100%',
+  },
 })
 
 export default function ArticlePage({
@@ -69,18 +68,20 @@ export default function ArticlePage({
   articleImg,
 }: Article) {
   return (
-    <Content>
-      <Link href={`/${authorName}`} passHref>
-        <AuthorInfo>
-          <Avatar src={authorImg} size={'md'} />
-          <p>{authorName}</p>
-        </AuthorInfo>
-      </Link>
-      <Title>{title}</Title>
-      <ImgContainer>
-        <img src={articleImg}/>
-      </ImgContainer>
-      {content}
-    </Content>
+    <Layout>
+      <Container padding='md'>
+        <Link href={`/${authorName}`} passHref>
+          <AuthorInfo>
+            <Avatar src={authorImg} size={'md'} />
+            <p>{authorName}</p>
+          </AuthorInfo>
+        </Link>
+        <Title>{title}</Title>
+        <ImgContainer>
+          <img src={articleImg} />
+        </ImgContainer>
+        {content}
+      </Container>
+    </Layout>
   )
 }
