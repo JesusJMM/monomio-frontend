@@ -29,7 +29,9 @@ export const Header: React.FC = () => {
       <Icon>Monomio</Icon>
     </Link>
       <Flex>
-        <Button>Login</Button>
+      <Link href='/auth/login' passHref>
+        <Button as={'a'}>Login</Button>
+        </Link>
         <Button color='dark'>Signup</Button>
       </Flex>
     </Container>
