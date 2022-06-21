@@ -1,9 +1,11 @@
 import * as React from 'react'
 import { styled } from '../../stitches.config'
-import { useField } from 'formik'
 
 const Container = styled('div', {
   marginBlock: '1em',
+})
+
+const InputContainer = styled('div', {
 })
 
 const Input = styled('input', {
@@ -70,9 +72,10 @@ const HelpMsg = styled('p', {
 
 type TextInputProps = React.ComponentProps<typeof Input> & {
   label?: string
-  required?: string
-  error?: string
-  description?: string
+  required?: boolean
+  error?: string | undefined
+  description?: string | undefined
+  name: string
 }
 
 export const TextInput: React.FC<TextInputProps> = ({
@@ -86,9 +89,30 @@ export const TextInput: React.FC<TextInputProps> = ({
     <Container>
       {label && <Label required={required}>{label}</Label>}
       {description && <HelpMsg>{description}</HelpMsg>}
+      <InputContainer>
+        <Input {...props} state={error ? 'error': 'ok'} />
+      </InputContainer>
+      { error ? (<HelpMsg error>{error}</HelpMsg>) : '' }
+    </Container>
+  )
+}
 
-      <Input {...props} />
-      {error && <HelpMsg error>{error}</HelpMsg>}
+export const PasswordInput: React.FC<TextInputProps> = ({
+  description,
+  error,
+  required,
+  label,
+  ...props
+}) => {
+  const [inputType, setInputType] = React.useState<'password' | 'text'>('password')
+  return (
+    <Container>
+      {label && <Label required={required}>{label}</Label>}
+      {description && <HelpMsg>{description}</HelpMsg>}
+      <InputContainer>
+        <Input {...props} type={inputType} state={error ? 'error': 'ok'} />
+      </InputContainer>
+      { error ? (<HelpMsg error>{error}</HelpMsg>) : '' }
     </Container>
   )
 }
