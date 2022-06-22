@@ -9,12 +9,15 @@ export const Button = styled('button', {
   backgroundColor: '$gray5',
   fontFamily: `'Inter', sans-serif`,
   cursor: 'pointer',
+  outline: '0px solid $blue7',
+  transition: 'outline .1s ease',
+  outlineOffset: 0,
   '&:hover': {
     backgroundColor: '$gray6',
     transform: 'translateY(-1px)',
   },
   '&:active, &:focus': {
-    outline: 'none',
+    outline: '3px solid $blue8',
   },
   variants: {
     color: {
