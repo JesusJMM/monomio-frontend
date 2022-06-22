@@ -8,7 +8,7 @@ const Container = styled('div', {
 const InputContainer = styled('div', {
 })
 
-const Input = styled('input', {
+const StyledInput = styled('input', {
   padding: '1px 12px',
   borderRadius: '8px',
   border: '1px solid $gray8',
@@ -70,7 +70,7 @@ const HelpMsg = styled('p', {
   },
 })
 
-type TextInputProps = React.ComponentProps<typeof Input> & {
+type TextInputProps = React.ComponentProps<typeof StyledInput> & {
   label?: string
   required?: boolean
   error?: string | undefined
@@ -90,7 +90,7 @@ export const TextInput: React.FC<TextInputProps> = ({
       {label && <Label required={required}>{label}</Label>}
       {description && <HelpMsg>{description}</HelpMsg>}
       <InputContainer>
-        <Input {...props} state={error ? 'error': 'ok'} />
+        <StyledInput {...props} state={error ? 'error': 'ok'} />
       </InputContainer>
       { error ? (<HelpMsg error>{error}</HelpMsg>) : '' }
     </Container>
@@ -110,7 +110,7 @@ export const PasswordInput: React.FC<TextInputProps> = ({
       {label && <Label required={required}>{label}</Label>}
       {description && <HelpMsg>{description}</HelpMsg>}
       <InputContainer>
-        <Input {...props} type={inputType} state={error ? 'error': 'ok'} />
+        <StyledInput {...props} type={inputType} state={error ? 'error': 'ok'} />
       </InputContainer>
       { error ? (<HelpMsg error>{error}</HelpMsg>) : '' }
     </Container>

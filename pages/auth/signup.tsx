@@ -1,4 +1,5 @@
-import { Box, Title, TextInput, Button, PasswordInput } from '../../components/styled'
+import { Box, Title, Button } from '../../components/styled'
+import { TextInput, PasswordInput } from '../../components/forms'
 import { styled } from '../../stitches.config'
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
