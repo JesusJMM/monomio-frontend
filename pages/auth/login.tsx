@@ -1,5 +1,5 @@
 import { Box, Title, Button } from '../../components/styled'
-import { TextInput, PasswordInput } from '../../components/forms'
+import { TextInput } from '../../components/forms'
 import { styled } from '../../stitches.config'
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
@@ -56,7 +56,7 @@ export default function LoginPage() {
           {...formik.getFieldProps('name')} 
           error={ formik.touched.name ? formik.errors.name: '' }
         />
-        <PasswordInput 
+        <TextInput 
           label="Password"
           required
           placeholder='Secret'

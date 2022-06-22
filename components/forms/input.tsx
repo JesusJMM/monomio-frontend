@@ -2,10 +2,15 @@ import * as React from 'react'
 import { styled } from '../../stitches.config'
 
 const Container = styled('div', {
-  marginBlock: '1em',
+  
 })
-
-const InputContainer = styled('div', {
+const Icon = styled('div', {
+  position: 'absolute',
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+  width: '36px',
+  height:'36px',
 })
 
 const StyledInput = styled('input', {
@@ -35,84 +40,42 @@ const StyledInput = styled('input', {
         color: '$red9',
       },
     },
+    withIcon: {
+      true: {
+        paddingLeft: '36px',
+      }
+    }
   },
   defaultVariants: {
     state: 'ok',
   },
 })
 
-export const Label = styled('label', {
-  fontFamily: `'Inter', sans-serif`,
-  fontSize: '14px',
-  color: '$gray12',
-  variants: {
-    required: {
-      true: {
-        '&:after': {
-          content: `' *'`,
-          color: '$red9',
-        },
-      },
-    },
-  },
-})
-
-const HelpMsg = styled('p', {
-  fontSize: '12px',
-  color: '$gray11',
-  marginTop: '4px',
-  variants: {
-    error: {
-      true: {
-        color: '$red9',
-      },
-    },
-  },
-})
-
-type TextInputProps = React.ComponentProps<typeof StyledInput> & {
-  label?: string
-  required?: boolean
-  error?: string | undefined
-  description?: string | undefined
-  name: string
-}
-
-export const TextInput: React.FC<TextInputProps> = ({
-  description,
-  error,
-  required,
-  label,
-  ...props
-}) => {
+export const Input : React.FC<React.ComponentProps<typeof StyledInput> & { icon?: React.ReactNode}> = ({ icon, ...props}) => {
   return (
     <Container>
-      {label && <Label required={required}>{label}</Label>}
-      {description && <HelpMsg>{description}</HelpMsg>}
-      <InputContainer>
-        <StyledInput {...props} state={error ? 'error': 'ok'} />
-      </InputContainer>
-      { error ? (<HelpMsg error>{error}</HelpMsg>) : '' }
+      {icon && <Icon>{icon}</Icon> }
+      <StyledInput withIcon={icon != undefined}/>
     </Container>
   )
 }
 
-export const PasswordInput: React.FC<TextInputProps> = ({
-  description,
-  error,
-  required,
-  label,
-  ...props
-}) => {
-  const [inputType, setInputType] = React.useState<'password' | 'text'>('password')
-  return (
-    <Container>
-      {label && <Label required={required}>{label}</Label>}
-      {description && <HelpMsg>{description}</HelpMsg>}
-      <InputContainer>
-        <StyledInput {...props} type={inputType} state={error ? 'error': 'ok'} />
-      </InputContainer>
-      { error ? (<HelpMsg error>{error}</HelpMsg>) : '' }
-    </Container>
-  )
-}
+// export const PasswordInput: React.FC<TextInputProps> = ({
+//   description,
+//   error,
+//   required,
+//   label,
+//   ...props
+// }) => {
+//   const [inputType, setInputType] = React.useState<'password' | 'text'>('password')
+//   return (
+//     <Container>
+//       {label && <Label required={required}>{label}</Label>}
+//       {description && <HelpMsg>{description}</HelpMsg>}
+//       <InputContainer>
+//         <StyledInput {...props} type={inputType} state={error ? 'error': 'ok'} />
+//       </InputContainer>
+//       { error ? (<HelpMsg error>{error}</HelpMsg>) : '' }
+//     </Container>
+//   )
+// }
