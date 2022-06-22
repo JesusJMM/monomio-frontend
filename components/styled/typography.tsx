@@ -3,7 +3,7 @@ import { styled } from "../../stitches.config"
 export const Title = styled('p', {
   fontSize: '6vw',
   fontWeight: 'bold',
-  fontFamily: `'Inter'`,
+  fontFamily: `'Inter', sans-serif`,
   color: '$gray12',
   variants: {
     variant: {

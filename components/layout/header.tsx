@@ -32,7 +32,9 @@ export const Header: React.FC = () => {
       <Link href='/auth/login' passHref>
         <Button as={'a'}>Login</Button>
         </Link>
-        <Button color='dark'>Signup</Button>
+      <Link href='/auth/signup' passHref>
+        <Button as={'a'} color='dark'>Signup</Button>
+        </Link>
       </Flex>
     </Container>
   )
