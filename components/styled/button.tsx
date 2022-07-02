@@ -16,7 +16,10 @@ export const Button = styled('button', {
     backgroundColor: '$gray6',
     transform: 'translateY(-1px)',
   },
-  '&:active, &:focus': {
+  '&:active': {
+    transform: 'translateY(0)',
+  },
+  '&:focus-visible': {
     outline: '3px solid $blue8',
   },
   variants: {
