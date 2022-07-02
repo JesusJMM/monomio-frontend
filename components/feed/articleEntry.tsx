@@ -4,13 +4,22 @@ import { Title, Avatar } from '../styled'
 import Link from 'next/link'
 
 export type ArticleFeed = {
-  title: string
-  desc: string
-  feedImg: string
-  slug: string
-  authorName: string
-  authorImg: string
-  id: number
+  article : {
+    id: number,
+    title: string,
+    desc: string,
+    created_at: string,
+    updated_at: string,
+    slug: string,
+    smImg: string,
+    lgImg: string,
+    userID: number,
+  },
+  author: {
+    id: number,
+    name: string,
+    img: string,
+  }
 }
 
 const Container = styled('div', {
@@ -73,34 +82,35 @@ const Desc = styled('p', {
 const ContentContainer = styled('div', {
   display: 'flex',
   flexDirection: 'row-reverse',
+  justifyContent: 'space-between',
   gap: '1em',
 })
 
 export const ArticleEntry: React.FC<
   ArticleFeed & { withoutAuthor?: boolean }
-> = ({ title, desc, slug, authorName, feedImg, authorImg, withoutAuthor }) => {
+> = ({ article, author, withoutAuthor }) => {
   return (
     <Container>
       <ContentContainer>
         <ImgContainer>
-          <Img src={feedImg} />
+          <Img src={article.smImg} />
         </ImgContainer>
         <div>
           {withoutAuthor || (
-            <Link href={`/${authorName}`} passHref>
-            <AuthorContainer>
-              <Author>{authorName}</Author>
-              <Avatar src={authorImg} />
-            </AuthorContainer>
+            <Link href={`/${author.name}`} passHref>
+              <AuthorContainer>
+                <Author>{author.name}</Author>
+                <Avatar src={author.img} />
+              </AuthorContainer>
             </Link>
           )}
-          <Link href={`/${authorName}/${slug}`} passHref>
+          <Link href={`/${author.name}/${article.slug}`} passHref>
             <Title order='3' as={'a'} variant={'anchor'}>
-              {title}
+              {article.title}
             </Title>
           </Link>
           <Desc css={{ display: 'none', '@bp1': { display: 'block' } }}>
-            {desc}
+            {article.desc}
           </Desc>
         </div>
       </ContentContainer>

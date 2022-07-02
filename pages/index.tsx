@@ -10,15 +10,17 @@ type StaticProps = {
 }
 
 export const getStaticProps: GetStaticProps = async () => {
-  const res = await fetch('http://localhost:8080/api/posts/feed?page=1')
+  const res = await fetch('http://localhost:8080/api/articles/paginated?page=1')
+  const json = await res.json()
   return {
     props: {
-      articles: await res.json()
+      articles: json.posts
     },
   }
 }
 
 const Home: NextPage<StaticProps> = (props) => {
+  console.log(props)
   return (
     <Layout>
       <Head>
@@ -29,7 +31,7 @@ const Home: NextPage<StaticProps> = (props) => {
       <Container padding='sm'>
         <Title order='2'>Resent Posts</Title>
       </Container>
-      {props.articles.map(a => <ArticleEntry key={a.id} {...a} /> )}
+      {props.articles.map(a => <ArticleEntry key={a.article.id} {...a} /> )}
     </Layout>
   )
 }
