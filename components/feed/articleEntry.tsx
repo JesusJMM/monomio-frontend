@@ -4,7 +4,7 @@ import { Title, Avatar } from '../styled'
 import Link from 'next/link'
 
 export type ArticleFeed = {
-  article : {
+  article: {
     id: number,
     title: string,
     desc: string,
@@ -15,11 +15,12 @@ export type ArticleFeed = {
     lgImg: string,
     userID: number,
   },
-  author: {
-    id: number,
-    name: string,
-    img: string,
-  }
+  author: User
+}
+export type User = {
+  id: number,
+  name: string,
+  img: string,
 }
 
 const Container = styled('div', {

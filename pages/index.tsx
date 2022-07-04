@@ -13,9 +13,7 @@ export const getStaticProps: GetStaticProps = async () => {
   const res = await fetch('http://localhost:8080/api/articles/paginated?page=1')
   const json = await res.json()
   return {
-    props: {
-      articles: json.posts
-    },
+    props: json,
   }
 }
 

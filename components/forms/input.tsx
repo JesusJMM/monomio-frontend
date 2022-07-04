@@ -55,7 +55,7 @@ export const Input : React.FC<React.ComponentProps<typeof StyledInput> & { icon?
   return (
     <Container>
       {icon && <Icon>{icon}</Icon> }
-      <StyledInput withIcon={icon != undefined}/>
+      <StyledInput {...props} withIcon={icon != undefined}/>
     </Container>
   )
 }

@@ -1,6 +1,7 @@
 import { styled } from '../../stitches.config'
 import { Label } from './label'
 import { Input } from './input'
+import { useField } from 'formik'
 
 const HelpMsg = styled('p', {
   fontSize: '12px',
@@ -26,19 +27,24 @@ type TextInputProps = React.ComponentProps<typeof Input> & {
   description?: string | undefined
 }
 
-export const TextInput: React.FC<TextInputProps> = ({
+export const TextInput: React.FC<TextInputProps & { name: string }> = ({
   description,
   error,
   required,
   label,
   ...props
 }) => {
+  const [field, meta] = useField(props)
   return (
     <Container>
       {label && <Label required={required}>{label}</Label>}
       {description && <HelpMsg>{description}</HelpMsg>}
-      <Input {...props} state={error ? 'error': 'ok'} />
-      { error ? (<HelpMsg error>{error}</HelpMsg>) : '' }
+      <Input {...props} {...field} state={error || (meta.error && meta.touched) ? 'error' : 'ok'} />
+      {error ?
+        (<HelpMsg error>{error}</HelpMsg>) :
+        meta.touched && meta.error ?
+          (<HelpMsg error>{meta.error}</HelpMsg>)
+          : ''}
     </Container>
   )
 }
