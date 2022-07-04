@@ -1,8 +1,6 @@
 import { styled } from "../../stitches.config"
 
-export const Title = styled('p', {
-  fontSize: '6vw',
-  fontWeight: 'bold',
+export const Text = styled('p', {
   fontFamily: `'Inter', sans-serif`,
   color: '$gray12',
   variants: {
@@ -19,6 +17,25 @@ export const Title = styled('p', {
         textAlign: 'center'
       }
     },
+    color: {
+      red: {
+        color: '$red9',
+      },
+    },
+  }
+})
+
+export const HelpMsg = styled(Text, {
+  fontFamily: `sans-serif`,
+  fontSize: '12px',
+  marginTop: '4px',
+  color:"$gray11",
+})
+
+export const Title = styled(Text, {
+  fontSize: '6vw',
+  fontWeight: 'bold',
+  variants: {
     order: {
       1: {
         fontSize: 32,

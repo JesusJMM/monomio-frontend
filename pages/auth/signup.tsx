@@ -1,9 +1,11 @@
-import { Box, Title, Button } from '../../components/styled'
+import { Box, Title, Button, HelpMsg } from '../../components/styled'
 import { TextInput } from '../../components/forms'
 import { styled } from '../../stitches.config'
 import { Formik } from 'formik'
 import * as Yup from 'yup'
-import { User } from '../../components/feed/articleEntry'
+import { signup } from '../../lib/auth'
+import { useRouter } from 'next/router'
+import { useState } from 'react'
 
 const Container = styled('div', {
   display: 'flex',
@@ -19,7 +21,9 @@ const Form = styled('form', {
   borderRadius: '8px',
 })
 
-export default function LoginPage() {
+export default function SignupPage() {
+  const [ errMsg, setErrMsg ] = useState("")
+  const router = useRouter()
   return (
     <Formik
       initialValues={{
@@ -27,20 +31,13 @@ export default function LoginPage() {
         password: '',
       }}
       onSubmit={async (values) => {
-        const res = await fetch("http://localhost:8080/api/auth/signup", {
-          method: "POST",
-          body: JSON.stringify(values),
-          mode: "cors",
-          headers: {
-            'Content-Type': "application/json",
-          },
-        })
-        let json: {
-          token: string,
-          user: User,
-        } = await res.json()
-        window.localStorage.removeItem("authToken")
-        window.localStorage.setItem("authToken", json.token)
+        try {
+          await signup(values)
+          setErrMsg("")
+          router.push('/')
+        } catch (err) {
+          setErrMsg("Opps! someting went wrong")
+        }
       }}
       validationSchema={
       Yup.object().shape({
@@ -60,6 +57,11 @@ export default function LoginPage() {
             <Title position='center' order={'2'}>
               Signup
             </Title>
+            {errMsg && (
+            <HelpMsg color="red" position="center">
+              {errMsg}
+            </HelpMsg>
+            )}
             <TextInput
               type="text"
               label="Name"
