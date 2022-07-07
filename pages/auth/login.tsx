@@ -23,7 +23,7 @@ const Form = styled('form', {
 
 export default function SignupPage() {
   const { login } = useAuthContext()
-  const [ errorMsg, setErrorMsg ] = useState('')
+  const [errorMsg, setErrorMsg] = useState('')
   const router = useRouter()
   return (
     <Formik
@@ -32,18 +32,14 @@ export default function SignupPage() {
         password: '',
       }}
       onSubmit={async (values) => {
-        try {
-          if(login){
-            const err = await login(values)
-            if(err){
-              setErrorMsg(err)
-              return
-            }
+        if (login) {
+          const err = await login(values)
+          if (err) {
+            setErrorMsg(err)
+            return
           }
-          router.push('/')
-        } catch (err) {
-          console.log(err)
         }
+        router.push('/')
       }}
       validationSchema={
         Yup.object().shape({
