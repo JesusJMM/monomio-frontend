@@ -30,17 +30,18 @@ export default function SignupPage() {
       initialValues={{
         name: '',
         password: '',
+        img: '',
       }}
       onSubmit={async (values) => {
-        try {
-          if(signup){
-            await signup(values)
+        if(signup){
+          const err =  await signup(values)
+          if(err){
+            setErrMsg(err)
+            return
           }
-          setErrMsg("")
-          router.push('/')
-        } catch (err) {
-          setErrMsg("Opps! someting went wrong")
         }
+        setErrMsg("")
+        router.push('/')
       }}
       validationSchema={
         Yup.object().shape({
@@ -78,6 +79,11 @@ export default function SignupPage() {
               label="Password"
               required
               placeholder='Secret'
+            />
+            <TextInput
+              name="img"
+              label="Image"
+              placeholder='https://avatars.githubusercontent.com/u/66509065?v=1'
             />
             <Box css={{ display: 'flex', justifyContent: 'right' }}>
               <Button type="submit" color='dark'>Submit</Button>

@@ -6,9 +6,12 @@ import { User } from '../components/feed/articleEntry'
 export type authContextType = {
   user: User | undefined,
   loadingData: boolean,
-  login?: (user: { name: string, password: string }) => Promise<void>,
+  operationError?: string,
+  // Returns undefined on susccess, error message on fail
+  login?: (user: { name: string, password: string }) => Promise<string | undefined>,
   logout?: () => void,
-  signup?: (user: { name: string, password: string }) => Promise<void>,
+  // Returns undefined on susccess, error message on fail
+  signup?: (user: { name: string, password: string, img?: string }) => Promise<string | undefined>,
 }
 
 const defaultValue = { user: undefined, loadingData: true }
@@ -56,14 +59,34 @@ export const AuthProvider: React.FC<React.PropsWithChildren> = ({ children }) =>
   // login
   const login = async (user: { name: string, password: string }) => {
     setLoading(true)
-    const res = await fetch("http://localhost:8080/api/auth/login", {
-      method: "POST",
-      body: JSON.stringify(user),
-      mode: "cors",
-      headers: {
-        'Content-Type': "application/json",
-      },
-    })
+    let res: Response  
+    try{
+      res = await fetch("http://localhost:8080/api/auth/login", {
+        method: "POST",
+        body: JSON.stringify(user),
+        mode: "cors",
+        headers: {
+          'Content-Type': "application/json",
+        },
+      })
+    }catch (err){
+      console.log({err})
+      setLoading(false)
+      return "Opps, something went wrong!"
+    }
+    // Check error
+    if(res.status != 200)
+    switch (res.status) {
+      case 404:
+        setLoading(false)
+        return "User does not exits"
+      case 403:
+        setLoading(false)
+        return "Your password was incorrect"
+      default:
+        setLoading(false)
+        return "Opps, something went wrong!"
+    }
     const payload: loginResponseType = await res.json()
     setUser({
       id: payload.user.id,
@@ -80,7 +103,7 @@ export const AuthProvider: React.FC<React.PropsWithChildren> = ({ children }) =>
     setUser(undefined)
   }
   // signup
-  const signup = async (user: { name: string, password: string }) => {
+  const signup = async (user: { name: string, password: string, img?: string }) => {
     setLoading(true)
     const res = await fetch("http://localhost:8080/api/auth/signup", {
       method: "POST",
@@ -99,6 +122,7 @@ export const AuthProvider: React.FC<React.PropsWithChildren> = ({ children }) =>
     window.localStorage.removeItem("authToken")
     window.localStorage.setItem("authToken", payload.token)
     setLoading(false)
+    return undefined
   }
   return (
     <AuthContext.Provider value={{
