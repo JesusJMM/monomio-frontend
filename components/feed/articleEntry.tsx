@@ -3,19 +3,21 @@ import { styled } from '../../stitches.config'
 import { Title, Avatar } from '../styled'
 import Link from 'next/link'
 
+export type PartialArticle = {
+  id: number,
+  title: string,
+  desc: string,
+  created_at: string,
+  updated_at: string,
+  slug: string,
+  smImg: string,
+  lgImg: string,
+  userID: number,
+}
+
 export type ArticleFeed = {
-  article: {
-    id: number,
-    title: string,
-    desc: string,
-    created_at: string,
-    updated_at: string,
-    slug: string,
-    smImg: string,
-    lgImg: string,
-    userID: number,
-  },
-  author: User
+  article: PartialArticle,
+  author: User,
 }
 export type User = {
   id: number,

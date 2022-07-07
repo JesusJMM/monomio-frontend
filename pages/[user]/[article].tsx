@@ -1,23 +1,23 @@
 import { styled } from '../../stitches.config'
 import { Title, Avatar, Container } from '../../components/styled'
 import { GetStaticPaths, GetStaticProps } from 'next'
-import { ArticleFeed } from '../../components/feed/articleEntry'
+import { PartialArticle, User, ArticleFeed } from '../../components/feed/articleEntry'
 import Link from 'next/link'
 import Layout from '../../components/layout'
 
-export type Article = ArticleFeed & {
-  content: string
-  createdAt: string
-  updatedAt: string
-  articleImg: string
+export type Article = {
+  article: PartialArticle & {content: string},
+  author: User,
 }
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  const res = await fetch('http://localhost:8080/api/posts/all')
-  const paths: Article[] = await res.json()
+  const res = await fetch('http://localhost:8080/api/articles/all')
+  const json = await res.json()
+  const paths: ArticleFeed[] = json.articles
+  console.log(paths)
   return {
     paths: paths.map((a) => ({
-      params: { user: a.authorName, article: a.slug },
+      params: { user: a.author.name, article: a.article.slug },
     })),
     fallback: false,
   }
@@ -25,9 +25,10 @@ export const getStaticPaths: GetStaticPaths = async () => {
 
 export const getStaticProps: GetStaticProps = async (ctx) => {
   const articleRes = await fetch(
-    `http://localhost:8080/api/post/${ctx.params?.user}/${ctx.params?.article}`
+    `http://localhost:8080/api/article/${ctx.params?.user}/${ctx.params?.article}`
   )
-  const article: ArticleFeed[] = await articleRes.json()
+  const article: Article[] = await articleRes.json()
+  console.log(article)
   return {
     props: {
       ...article,
@@ -61,26 +62,24 @@ const ImgContainer = styled('div', {
 })
 
 export default function ArticlePage({
-  content,
-  title,
-  authorName,
-  authorImg,
-  articleImg,
+  article,
+  author,
 }: Article) {
+  console.log(article, author)
   return (
     <Layout>
       <Container padding='md'>
-        <Link href={`/${authorName}`} passHref>
+        <Link href={`/${author.name}`} passHref>
           <AuthorInfo>
-            <Avatar src={authorImg} size={'md'} />
-            <p>{authorName}</p>
+            <Avatar src={author.img} size={'md'} />
+            <p>{author.name}</p>
           </AuthorInfo>
         </Link>
-        <Title>{title}</Title>
+        <Title>{article.title}</Title>
         <ImgContainer>
-          <img src={articleImg} />
+          <img src={article.lgImg} />
         </ImgContainer>
-        {content}
+        {article.content}
       </Container>
     </Layout>
   )
