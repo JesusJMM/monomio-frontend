@@ -37,6 +37,11 @@ type TokenClaims = {
   userName: string,
 }
 
+function saveToken(token: string) {
+  window.localStorage.removeItem("authToken")
+  window.localStorage.setItem("authToken",token)
+} 
+
 export const AuthProvider: React.FC<React.PropsWithChildren> = ({ children }) => {
   const [user, setUser] = React.useState<User | undefined>(undefined)
   const [loading, setLoading] = React.useState(true)
@@ -93,8 +98,7 @@ export const AuthProvider: React.FC<React.PropsWithChildren> = ({ children }) =>
       name: payload.user.name,
       img: payload.user.img
     })
-    window.localStorage.removeItem("authToken")
-    window.localStorage.setItem("authToken", payload.token)
+    saveToken(payload.token)
     setLoading(false)
   }
   // logout
@@ -139,8 +143,7 @@ export const AuthProvider: React.FC<React.PropsWithChildren> = ({ children }) =>
       name: payload.user.name,
       img: payload.user.img
     })
-    window.localStorage.removeItem("authToken")
-    window.localStorage.setItem("authToken", payload.token)
+    saveToken(payload.token)
     setLoading(false)
     return undefined
   }
