@@ -59,8 +59,8 @@ export const AuthProvider: React.FC<React.PropsWithChildren> = ({ children }) =>
   // login
   const login = async (user: { name: string, password: string }) => {
     setLoading(true)
-    let res: Response  
-    try{
+    let res: Response
+    try {
       res = await fetch("http://localhost:8080/api/auth/login", {
         method: "POST",
         body: JSON.stringify(user),
@@ -69,24 +69,24 @@ export const AuthProvider: React.FC<React.PropsWithChildren> = ({ children }) =>
           'Content-Type': "application/json",
         },
       })
-    }catch (err){
-      console.log({err})
+    } catch (err) {
+      console.log({ err })
       setLoading(false)
       return "Opps, something went wrong!"
     }
     // Check error
-    if(res.status != 200)
-    switch (res.status) {
-      case 404:
-        setLoading(false)
-        return "User does not exits"
-      case 403:
-        setLoading(false)
-        return "Your password was incorrect"
-      default:
-        setLoading(false)
-        return "Opps, something went wrong!"
-    }
+    if (res.status != 200)
+      switch (res.status) {
+        case 404:
+          setLoading(false)
+          return "User does not exits"
+        case 403:
+          setLoading(false)
+          return "Your password was incorrect"
+        default:
+          setLoading(false)
+          return "Opps, something went wrong!"
+      }
     const payload: loginResponseType = await res.json()
     setUser({
       id: payload.user.id,
@@ -105,14 +105,34 @@ export const AuthProvider: React.FC<React.PropsWithChildren> = ({ children }) =>
   // signup
   const signup = async (user: { name: string, password: string, img?: string }) => {
     setLoading(true)
-    const res = await fetch("http://localhost:8080/api/auth/signup", {
-      method: "POST",
-      body: JSON.stringify(user),
-      mode: "cors",
-      headers: {
-        'Content-Type': "application/json",
-      },
-    })
+    let res: Response
+    try {
+      res = await fetch("http://localhost:8080/api/auth/signup", {
+        method: "POST",
+        body: JSON.stringify(user),
+        mode: "cors",
+        headers: {
+          'Content-Type': "application/json",
+        },
+      })
+    } catch (err) {
+      console.log({ err })
+      setLoading(false)
+      return "Opps, something went wrong!"
+    }
+    // Check error
+    if (res.status != 200)
+      switch (res.status) {
+        case 404:
+          setLoading(false)
+          return "User does not exits"
+        case 403:
+          setLoading(false)
+          return "Your password was incorrect"
+        default:
+          setLoading(false)
+          return "Opps, something went wrong!"
+      }
     const payload: signupResponseType = await res.json()
     setUser({
       id: payload.user.id,
