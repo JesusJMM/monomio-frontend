@@ -3,9 +3,9 @@ import { TextInput } from '../../components/forms'
 import { styled } from '../../stitches.config'
 import { Formik } from 'formik'
 import * as Yup from 'yup'
-import { signup } from '../../lib/auth'
 import { useRouter } from 'next/router'
 import { useState } from 'react'
+import { useAuthContext } from '../../context/auth'
 
 const Container = styled('div', {
   display: 'flex',
@@ -22,7 +22,8 @@ const Form = styled('form', {
 })
 
 export default function SignupPage() {
-  const [ errMsg, setErrMsg ] = useState("")
+  const [errMsg, setErrMsg] = useState("")
+  const { signup } = useAuthContext()
   const router = useRouter()
   return (
     <Formik
@@ -32,7 +33,9 @@ export default function SignupPage() {
       }}
       onSubmit={async (values) => {
         try {
-          await signup(values)
+          if(signup){
+            await signup(values)
+          }
           setErrMsg("")
           router.push('/')
         } catch (err) {
@@ -40,15 +43,15 @@ export default function SignupPage() {
         }
       }}
       validationSchema={
-      Yup.object().shape({
-        name: Yup.string()
-          .min(3, "Too short")
-          .max(50, "Too Long!")
-          .required("Required"),
-        password: Yup.string()
-          .min(8, "Too short")
-          .required("Required"),
-      })
+        Yup.object().shape({
+          name: Yup.string()
+            .min(3, "Too short")
+            .max(50, "Too Long!")
+            .required("Required"),
+          password: Yup.string()
+            .min(8, "Too short")
+            .required("Required"),
+        })
       }
     >
       {({ handleSubmit }) => (
@@ -58,9 +61,9 @@ export default function SignupPage() {
               Signup
             </Title>
             {errMsg && (
-            <HelpMsg color="red" position="center">
-              {errMsg}
-            </HelpMsg>
+              <HelpMsg color="red" position="center">
+                {errMsg}
+              </HelpMsg>
             )}
             <TextInput
               type="text"

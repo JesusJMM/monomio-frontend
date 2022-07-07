@@ -42,5 +42,52 @@ export const Button = styled('button', {
         fontSize: '14px',
       },
     },
+    loading: {
+      true: {
+        backgroundColor: '$gray4',
+        color: '$gray4',
+        cursor: 'auto',
+        '&:hover': {
+          backgroundColor: '$gray4',
+          transform: 'translateY(0px)',
+        },
+      }
+    }
   },
 })
+
+const IconButtonContainer = styled('button', {
+  height: '28px',
+  width: '28px',
+  minHeight: '28px',
+  minWidth: '28px',
+  border:'none',
+  padding: 0,
+  borderRadius: '8px',
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+  outline: '0px solid $blue7',
+  transition: 'outline .1s ease',
+  '&:hover': {
+    backgroundColor: '$gray4',
+    transform: 'translateY(-1px)',
+  },
+  '&:focus-visible': {
+    outline: '3px solid $blue8',
+  },
+  backgroundColor: 'transparent'
+})
+
+type IconButtonPropsType = {
+  icon: React.ReactNode
+}
+
+export const IconButton: React.FC<IconButtonPropsType & React.ComponentProps<typeof IconButtonContainer>> = ({icon, ...props}) => {
+  return (
+    <IconButtonContainer {...props}>
+      {icon}
+    </IconButtonContainer>
+  )
+}
+

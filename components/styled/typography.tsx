@@ -3,6 +3,7 @@ import { styled } from "../../stitches.config"
 export const Text = styled('p', {
   fontFamily: `'Inter', sans-serif`,
   color: '$gray12',
+  fontSize: '16px',
   variants: {
     variant: {
       anchor: {

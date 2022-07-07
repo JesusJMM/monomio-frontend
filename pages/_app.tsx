@@ -1,6 +1,7 @@
 import '../styles/globals.css'
 import type { AppProps } from 'next/app'
 import { globalCss } from '../stitches.config'
+import { AuthProvider } from '../context/auth'
 
 const globalStyles = globalCss({
   'body': {
@@ -10,7 +11,11 @@ const globalStyles = globalCss({
 
 function MyApp({ Component, pageProps }: AppProps) {
   globalStyles()
-  return <Component {...pageProps} />
+  return (
+    <AuthProvider>
+      <Component {...pageProps} />
+    </AuthProvider>
+  )
 }
 
 export default MyApp

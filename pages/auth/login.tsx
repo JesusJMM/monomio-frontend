@@ -1,8 +1,11 @@
-import { Box, Title, Button } from '../../components/styled'
+import { Box, Title, Button, HelpMsg } from '../../components/styled'
 import { TextInput } from '../../components/forms'
 import { styled } from '../../stitches.config'
-import { useFormik } from 'formik'
+import { Formik } from 'formik'
 import * as Yup from 'yup'
+import { useRouter } from 'next/router'
+import { useState } from 'react'
+import { useAuthContext } from '../../context/auth'
 
 const Container = styled('div', {
   display: 'flex',
@@ -18,55 +21,67 @@ const Form = styled('form', {
   borderRadius: '8px',
 })
 
-interface formValues {
-  name: string
-  password: string
-}
-
-
-export default function LoginPage() {
-  const formik = useFormik<formValues>({
-    initialValues: {
-      name: '',
-      password: '',
-    },
-    validationSchema: Yup.object({
-      name: Yup.string()
-        .min(4, 'Must have 4 character at least')
-        .max(30, 'Must be less than 30 characters')
-        .required('Required'),
-      password: Yup.string()
-        .required('Required'),
-      }),
-    onSubmit: (values) => {
-      console.log(values)
-    },
-  })
+export default function SignupPage() {
+  const [errMsg, setErrMsg] = useState("")
+  const { login } = useAuthContext()
+  const router = useRouter()
   return (
-    <Container>
-      <Form>
-        <Title position='center' order={'2'}>
-          Login
-        </Title>
-        <TextInput 
-          type="text"
-          label="Name"
-          placeholder='Your Name' 
-          required
-          {...formik.getFieldProps('name')} 
-          error={ formik.touched.name ? formik.errors.name: '' }
-        />
-        <TextInput 
-          label="Password"
-          required
-          placeholder='Secret'
-          {...formik.getFieldProps('email')} 
-          error={ formik.touched.password ? formik.errors.password : '' }
-        />
-        <Box css={{ display: 'flex', justifyContent: 'right'}}>
-          <Button type="submit" color='dark'>Submit</Button>
-        </Box>
-      </Form>
-    </Container>
+    <Formik
+      initialValues={{
+        name: '',
+        password: '',
+      }}
+      onSubmit={async (values) => {
+        try {
+          if(login){
+            await login(values)
+          }
+          setErrMsg("")
+          router.push('/')
+        } catch (err) {
+          setErrMsg("Opps! someting went wrong")
+        }
+      }}
+      validationSchema={
+        Yup.object().shape({
+          name: Yup.string()
+            .required("Required"),
+          password: Yup.string()
+            .required("Required"),
+        })
+      }
+    >
+      {({ handleSubmit }) => (
+        <Container>
+          <Form onSubmit={handleSubmit}>
+            <Title position='center' order={'2'}>
+              Login
+            </Title>
+            {errMsg && (
+              <HelpMsg color="red" position="center">
+                {errMsg}
+              </HelpMsg>
+            )}
+            <TextInput
+              type="text"
+              label="Name"
+              name="name"
+              placeholder='Your Name'
+              required
+            />
+            <TextInput
+              name="password"
+              label="Password"
+              required
+              placeholder='Secret'
+            />
+            <Box css={{ display: 'flex', justifyContent: 'right' }}>
+              <Button type="submit" color='dark'>Submit</Button>
+            </Box>
+          </Form>
+        </Container>
+      )}
+    </Formik>
   )
 }
+
