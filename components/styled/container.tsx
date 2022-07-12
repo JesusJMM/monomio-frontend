@@ -22,3 +22,10 @@ export const Container = styled('div', {
 })
 
 export const Box = styled('div', {})
+export const Flex = styled('div', {
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+  gap: '6px',
+})
+

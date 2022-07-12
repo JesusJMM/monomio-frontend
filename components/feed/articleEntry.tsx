@@ -1,7 +1,8 @@
 import * as React from 'react'
 import { styled } from '../../stitches.config'
-import { Title, Avatar } from '../styled'
+import { Title, Avatar, Text, Flex } from '../styled'
 import Link from 'next/link'
+import format from 'date-fns/format'
 
 export type PartialArticle = {
   id: number,
@@ -39,7 +40,7 @@ const Container = styled('div', {
   borderBottom: '1px solid $gray7',
 })
 
-const AuthorContainer = styled('a', {
+const Header = styled('a', {
   display: 'flex',
   justifyContent: 'left',
   alignItems: 'center',
@@ -67,21 +68,6 @@ const Img = styled('img', {
   maxHeight: '100%',
 })
 
-const Author = styled('p', {
-  fontFamily: `'Roboto'`,
-  color: '$gray9',
-  fontSize: '.8em',
-  '&:hover': {
-    textDecoration: 'underline',
-    cursor: 'pointer',
-  },
-})
-
-const Desc = styled('p', {
-  fontFamily: `'Roboto'`,
-  color: '$gray11',
-})
-
 const ContentContainer = styled('div', {
   display: 'flex',
   flexDirection: 'row-reverse',
@@ -99,22 +85,25 @@ export const ArticleEntry: React.FC<
           <Img src={article.smImg} />
         </ImgContainer>
         <div>
-          {withoutAuthor || (
-            <Link href={`/${author.name}`} passHref>
-              <AuthorContainer>
-                <Author>{author.name}</Author>
-                <Avatar src={author.img} />
-              </AuthorContainer>
-            </Link>
-          )}
+          <Header>
+            {withoutAuthor || (
+              <Link href={`/${author.name}`} passHref>
+                <Flex as={'a'}>
+                  <Avatar src={author.img} />
+                  <Text size='sm' color='gray' variant='anchor' >{author.name}</Text>
+                </Flex>
+              </Link>
+            )}
+            <Text size='sm' color="gray">{format(new Date(article.created_at), "MMM d")}</Text>
+          </Header>
           <Link href={`/${author.name}/${article.slug}`} passHref>
             <Title order='3' as={'a'} variant={'anchor'}>
               {article.title}
             </Title>
           </Link>
-          <Desc css={{ display: 'none', '@bp1': { display: 'block' } }}>
+          <Text css={{ display: 'none', '@bp1': { display: 'block' } }} color="gray">
             {article.desc}
-          </Desc>
+          </Text>
         </div>
       </ContentContainer>
     </Container>

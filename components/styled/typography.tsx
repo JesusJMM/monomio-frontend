@@ -22,7 +22,38 @@ export const Text = styled('p', {
       red: {
         color: '$red9',
       },
+      gray: {
+        color: '$gray11'
+      }
     },
+    size: {
+      xs: {
+        fontSize: '10px',
+      },
+      sm: {
+        fontSize: '12px',
+      },
+      md: {
+        fontSize: '14px',
+      },
+      lg: {
+        fontSize: '16px',
+      },
+      xl: {
+        fontSize: '18px',
+      },
+      '2xl': {
+        fontSize: '24px',
+      },
+      '3xl': {
+        fontSize: '28px',
+      },
+    },
+    font: {
+      text: {
+        fontFamily: "'Roboto', sans-serif",
+      },
+    }
   }
 })
 
