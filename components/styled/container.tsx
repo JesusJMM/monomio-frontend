@@ -27,5 +27,18 @@ export const Flex = styled('div', {
   justifyContent: 'center',
   alignItems: 'center',
   gap: '6px',
+  variants: {
+    position: {
+      center: {
+        justifyContent: 'center',
+      },
+      end: {
+        justifyContent: 'end',
+      },
+      start: {
+        justifyContent: 'start',
+      },
+    }
+  },
 })
 

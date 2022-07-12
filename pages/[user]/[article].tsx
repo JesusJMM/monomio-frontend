@@ -1,12 +1,13 @@
 import { styled } from '../../stitches.config'
-import { Title, Avatar, Container } from '../../components/styled'
+import { Title, Avatar, Container, Text, Flex } from '../../components/styled'
 import { GetStaticPaths, GetStaticProps } from 'next'
 import { PartialArticle, User, ArticleFeed } from '../../components/feed/articleEntry'
 import Link from 'next/link'
 import Layout from '../../components/layout'
+import format from 'date-fns/format'
 
 export type Article = {
-  article: PartialArticle & {content: string},
+  article: PartialArticle & { content: string },
   author: User,
 }
 
@@ -36,19 +37,6 @@ export const getStaticProps: GetStaticProps = async (ctx) => {
   }
 }
 
-const AuthorInfo = styled('a', {
-  display: 'flex',
-  alignItems: 'center',
-  gap: '.5em',
-  marginBottom: '1em',
-  '& p': {
-    color: '$gray9',
-    cursor: 'pointer',
-  },
-  '& p:hover': {
-    textDecoration: 'underline',
-  },
-})
 const ImgContainer = styled('div', {
   display: 'grid',
   placeContent: 'center',
@@ -56,7 +44,7 @@ const ImgContainer = styled('div', {
   overflow: 'hidden',
   borderRadius: '8px',
   marginBlock: '1em',
-  '& img':{
+  '& img': {
     width: '100%',
   },
 })
@@ -69,12 +57,15 @@ export default function ArticlePage({
   return (
     <Layout>
       <Container padding='md'>
-        <Link href={`/${author.name}`} passHref>
-          <AuthorInfo>
-            <Avatar src={author.img} size={'md'} />
-            <p>{author.name}</p>
-          </AuthorInfo>
-        </Link>
+        <Flex position='start' css={{ marginBottom:'1em'}}>
+          <Link href={`/${author.name}`} passHref>
+            <Flex as='a'>
+              <Avatar src={author.img} size={'md'} />
+              <Text size='md' variant='anchor' color='gray'>{author.name}</Text>
+            </Flex>
+          </Link>
+          <Text size='md' color='gray'>{format(new Date(article.updated_at), 'MMMM d')}</Text>
+        </Flex>
         <Title>{article.title}</Title>
         <ImgContainer>
           <img src={article.lgImg} />
