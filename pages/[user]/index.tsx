@@ -1,18 +1,13 @@
 import { GetStaticPaths, GetStaticProps } from 'next'
-import { ArticleFeed, ArticleEntry } from '../../components/feed/articleEntry'
+import { ArticleFeed, ArticleEntry, User } from '../../components/feed/articleEntry'
 import { Title, Avatar } from '../../components/styled'
 import Layout from '../../components/layout'
 import { styled } from '../../stitches.config'
 
-type Author = {
-  id: number
-  name: string
-  imgUrl: string
-}
-
 export const getStaticPaths: GetStaticPaths = async () => {
-  const res = await fetch('http://localhost:8080/api/authors')
-  const paths: Author[] = await res.json()
+  const res = await fetch('http://localhost:8080/api/authors/all')
+  const json = await res.json()
+  const paths : User[] = json.authors
   return {
     paths: paths.map((a) => ({ params: { user: a.name } })),
     fallback: true,
@@ -23,20 +18,22 @@ export const getStaticProps: GetStaticProps = async (ctx) => {
   const authorRes = await fetch(
     `http://localhost:8080/api/author/${ctx.params?.user}`
   )
-  const author: Author = await authorRes.json()
+  const authorJson = await authorRes.json()
+  console.log(authorJson)
   const articlesRes = await fetch(
-    `http://localhost:8080/api/post/${ctx.params?.user}`
+    `http://localhost:8080/api/articles/author/${ctx.params?.user}`
   )
-  const articles: ArticleFeed[] = await articlesRes.json()
+  const json = await articlesRes.json()
+  const articles: ArticleFeed[] = json.articles
   return {
     props: {
-      author,
       articles,
+      author: authorJson.author
     },
   }
 }
 
-type AuthorPagePropsType = { author: Author; articles: ArticleFeed[] }
+type AuthorPagePropsType = { articles: ArticleFeed[], author: User }
 
 
 const AuthorInfoContainer = styled('div',{
@@ -49,15 +46,16 @@ const AuthorInfoContainer = styled('div',{
   gap: '.5em',
 })
 
-export default function AuthorPage({ author, articles }: AuthorPagePropsType) {
+export default function AuthorPage({ articles, author }: AuthorPagePropsType) {
+  console.log(author)
   return (
     <Layout>
       <AuthorInfoContainer>
-      <Avatar src={author.imgUrl} size='lg' />
+      <Avatar src={author.img} size='lg' />
         <Title order='2'>{author.name}</Title>
       </AuthorInfoContainer>
       {articles.map((a) => (
-        <ArticleEntry withoutAuthor {...a} key={a.id}/>
+        <ArticleEntry withoutAuthor {...a} key={a.article.id}/>
       ))}
     </Layout>
   )
