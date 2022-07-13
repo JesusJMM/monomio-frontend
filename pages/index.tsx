@@ -2,6 +2,7 @@ import type { NextPage } from 'next'
 import Head from 'next/head'
 import { GetStaticProps } from 'next'
 import { ArticleEntry } from '../components/feed/articleEntry'
+import { getArticlePage } from '../lib/articles'
 import type { ArticleFeed } from '../lib/types'
 import Layout from '../components/layout'
 import { Title, Container } from '../components/styled'
@@ -11,10 +12,9 @@ type StaticProps = {
 }
 
 export const getStaticProps: GetStaticProps = async () => {
-  const res = await fetch('http://localhost:8080/api/articles/paginated?page=1')
-  const json = await res.json()
+  const articles = await getArticlePage(1)
   return {
-    props: json,
+    props: {articles},
   }
 }
 

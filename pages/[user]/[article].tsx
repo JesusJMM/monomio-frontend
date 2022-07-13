@@ -1,16 +1,14 @@
 import { styled } from '../../stitches.config'
 import { Title, Avatar, Container, Text, Flex } from '../../components/styled'
 import { GetStaticPaths, GetStaticProps } from 'next'
-import type { Article, ArticleFeed } from '../../lib/types'
+import { getAllArticles, getArticle } from '../../lib/articles'
+import type { Article } from '../../lib/types'
 import Link from 'next/link'
 import Layout from '../../components/layout'
 import format from 'date-fns/format'
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  const res = await fetch('http://localhost:8080/api/articles/all')
-  const json = await res.json()
-  const paths: ArticleFeed[] = json.articles
-  console.log(paths)
+  const paths = await getAllArticles()
   return {
     paths: paths.map((a) => ({
       params: { user: a.author.name, article: a.article.slug },
@@ -20,11 +18,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
 }
 
 export const getStaticProps: GetStaticProps = async (ctx) => {
-  const articleRes = await fetch(
-    `http://localhost:8080/api/article/${ctx.params?.user}/${ctx.params?.article}`
-  )
-  const article: Article[] = await articleRes.json()
-  console.log(article)
+  const article = await getArticle(`${ctx.params?.user}`, `${ctx.params?.article}`)
   return {
     props: {
       ...article,
