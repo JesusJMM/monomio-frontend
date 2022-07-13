@@ -3,6 +3,7 @@ import {
   gray,
   blue,
   red,
+  mauve,
 } from '@radix-ui/colors'
 
 export const {
@@ -22,6 +23,7 @@ export const {
       ...gray,
       ...blue,
       ...red,
+      ...mauve,
     },
     shadows: {
       ...gray,

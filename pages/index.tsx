@@ -29,7 +29,7 @@ const Home: NextPage<StaticProps> = (props) => {
       <Container padding='sm'>
         <Title order='2'>Resent Posts</Title>
       </Container>
-      {props.articles.map(a => <ArticleEntry key={a.article.id} {...a} /> )}
+      {/* {props.articles.map(a => <ArticleEntry key={a.article.id} {...a} /> )} */}
     </Layout>
   )
 }

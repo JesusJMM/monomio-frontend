@@ -1,7 +1,7 @@
 import * as React from 'react'
 import jwt_decode from 'jwt-decode'
 
-import { User } from '../components/feed/articleEntry'
+import { User } from '../lib/types'
 
 export type authContextType = {
   user: User | undefined,

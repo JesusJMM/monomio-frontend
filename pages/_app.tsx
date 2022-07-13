@@ -5,7 +5,7 @@ import { AuthProvider } from '../context/auth'
 
 const globalStyles = globalCss({
   'body': {
-    backgroundColor: '$gray1'
+    backgroundColor: '$mauve2'
   }
 })
 
