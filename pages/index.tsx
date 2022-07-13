@@ -1,7 +1,8 @@
 import type { NextPage } from 'next'
 import Head from 'next/head'
 import { GetStaticProps } from 'next'
-import { ArticleFeed, ArticleEntry } from '../components/feed/articleEntry'
+import { ArticleEntry } from '../components/feed/articleEntry'
+import type { ArticleFeed } from '../lib/types'
 import Layout from '../components/layout'
 import { Title, Container } from '../components/styled'
 
@@ -18,7 +19,6 @@ export const getStaticProps: GetStaticProps = async () => {
 }
 
 const Home: NextPage<StaticProps> = (props) => {
-  console.log(props)
   return (
     <Layout>
       <Head>

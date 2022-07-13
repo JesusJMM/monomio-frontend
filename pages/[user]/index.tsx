@@ -1,5 +1,6 @@
 import { GetStaticPaths, GetStaticProps } from 'next'
-import { ArticleFeed, ArticleEntry, User } from '../../components/feed/articleEntry'
+import { ArticleEntry } from '../../components/feed/articleEntry'
+import type { ArticleFeed, User } from '../../lib/types'
 import { Title, Avatar } from '../../components/styled'
 import Layout from '../../components/layout'
 import { styled } from '../../stitches.config'

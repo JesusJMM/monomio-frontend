@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { styled } from '../../stitches.config'
 import { User } from '../feed/articleEntry'
-import { Avatar, IconButton} from '../styled'
+import { Avatar, IconButton } from '../styled'
 import { Logout } from 'tabler-icons-react'
 import { useAuthContext } from '../../context/auth'
 
@@ -17,13 +17,13 @@ const UserName = styled('span', {
   fontFamily: "'Inter', sans-serif",
 })
 
-const UserProfile: React.FC<{user: User}> = ({ user } ) => {
-  const {logout} = useAuthContext()
+const UserProfile: React.FC<{ user: User }> = ({ user }) => {
+  const { logout } = useAuthContext()
   return (
     <Container>
       <Avatar src={user.img} />
       <UserName>{user.name}</UserName>
-      <IconButton onClick={logout} title="logout" css={{ marginTop: '1px'}} icon={<Logout size={14} />} />
+      <IconButton onClick={logout} title="logout" css={{ marginTop: '1px' }} icon={<Logout size={14} />} />
     </Container>
   )
 }

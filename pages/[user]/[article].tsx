@@ -1,15 +1,10 @@
 import { styled } from '../../stitches.config'
 import { Title, Avatar, Container, Text, Flex } from '../../components/styled'
 import { GetStaticPaths, GetStaticProps } from 'next'
-import { PartialArticle, User, ArticleFeed } from '../../components/feed/articleEntry'
+import type { Article, ArticleFeed } from '../../lib/types'
 import Link from 'next/link'
 import Layout from '../../components/layout'
 import format from 'date-fns/format'
-
-export type Article = {
-  article: PartialArticle & { content: string },
-  author: User,
-}
 
 export const getStaticPaths: GetStaticPaths = async () => {
   const res = await fetch('http://localhost:8080/api/articles/all')
@@ -57,13 +52,14 @@ export default function ArticlePage({
   return (
     <Layout>
       <Container padding='md'>
-        <Flex position='start' css={{ marginBottom:'1em'}}>
+        <Flex position='start' css={{ marginBottom: '1em' }}>
           <Link href={`/${author.name}`} passHref>
             <Flex as='a'>
               <Avatar src={author.img} size={'md'} />
               <Text size='md' variant='anchor' color='gray'>{author.name}</Text>
             </Flex>
           </Link>
+          <span>·</span>
           <Text size='md' color='gray'>{format(new Date(article.updated_at), 'MMMM d')}</Text>
         </Flex>
         <Title>{article.title}</Title>
