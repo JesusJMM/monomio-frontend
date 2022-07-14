@@ -125,7 +125,7 @@ export const AuthProvider: React.FC<React.PropsWithChildren> = ({ children }) =>
       return "Opps, something went wrong!"
     }
     // Check error
-    if (res.status != 200)
+    if (res.status != 201)
       switch (res.status) {
         case 404:
           setLoading(false)

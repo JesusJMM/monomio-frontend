@@ -80,6 +80,7 @@ export const IconButton = styled(Button, {
     outline: '3px solid $blue8',
   },
   '&:active': {
+    transform: 'translateY(0)',
     backgroundColor: '$gray5',
   }
 })

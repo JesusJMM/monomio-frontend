@@ -38,6 +38,7 @@ export default function SignupPage() {
         if(signup){
           const err =  await signup(values)
           if(err){
+            console.log(err)
             setErrMsg(err)
             return
           }

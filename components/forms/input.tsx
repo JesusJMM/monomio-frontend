@@ -24,6 +24,8 @@ const StyledInput = styled('input', {
   boxSizing: 'border-box',
   fontFamily: `'Inter', sans-serif`,
   marginTop: '8px',
+  backgroundColor: '$sand1',
+  color: '$red12',
   variants: {
     state: {
       ok: {
