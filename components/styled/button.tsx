@@ -6,7 +6,8 @@ export const Button = styled('button', {
   fontSize: '12px',
   fontWeight: 'bold',
   border: '1px solid transparent',
-  backgroundColor: '$gray5',
+  backgroundColor: '$gray3',
+  color: '$gray12',
   fontFamily: `'Inter', sans-serif`,
   cursor: 'pointer',
   outline: '0px solid $blue7',
@@ -26,15 +27,15 @@ export const Button = styled('button', {
     color: {
       dark: {
         backgroundColor: '$gray12',
-        color: 'white',
+        color: '$sand1',
         '&:hover': {
           backgroundColor: '$gray11',
-          color: 'white',
+          color: '$sand1',
         },
       },
       blue: {
         backgroundColor: '$blue9',
-        color: 'white',
+        color: '$sand1',
       },
     },
     size: {
@@ -56,7 +57,7 @@ export const Button = styled('button', {
   },
 })
 
-const IconButtonContainer = styled('button', {
+export const IconButton = styled(Button, {
   height: '28px',
   width: '28px',
   minHeight: '28px',
@@ -69,6 +70,8 @@ const IconButtonContainer = styled('button', {
   alignItems: 'center',
   outline: '0px solid $blue7',
   transition: 'outline .1s ease',
+  color: '$gray12',
+  backgroundColor: '$gray3',
   '&:hover': {
     backgroundColor: '$gray4',
     transform: 'translateY(-1px)',
@@ -76,18 +79,7 @@ const IconButtonContainer = styled('button', {
   '&:focus-visible': {
     outline: '3px solid $blue8',
   },
-  backgroundColor: 'transparent'
+  '&:active': {
+    backgroundColor: '$gray5',
+  }
 })
-
-type IconButtonPropsType = {
-  icon: React.ReactNode
-}
-
-export const IconButton: React.FC<IconButtonPropsType & React.ComponentProps<typeof IconButtonContainer>> = ({icon, ...props}) => {
-  return (
-    <IconButtonContainer {...props}>
-      {icon}
-    </IconButtonContainer>
-  )
-}
-

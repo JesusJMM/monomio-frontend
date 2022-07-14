@@ -1,9 +1,15 @@
 import { createStitches } from '@stitches/react'
-import { 
+import {
   gray,
   blue,
   red,
   mauve,
+  sand,
+  mauveDark,
+  redDark,
+  blueDark,
+  grayDark,
+  sandDark,
 } from '@radix-ui/colors'
 
 export const {
@@ -24,6 +30,7 @@ export const {
       ...blue,
       ...red,
       ...mauve,
+      ...sand,
     },
     shadows: {
       ...gray,
@@ -34,4 +41,14 @@ export const {
     bp2: '(min-width: 768px)',
     bp3: '(min-width: 1024px)',
   },
+})
+
+export const darkTheme = createTheme({
+  colors: {
+    ...grayDark,
+    ...blueDark,
+    ...redDark,
+    ...mauveDark,
+    ...sandDark,
+  }
 })

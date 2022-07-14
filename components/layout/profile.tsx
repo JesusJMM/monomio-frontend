@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { styled } from '../../stitches.config'
-import { User } from '../feed/articleEntry'
+import { User } from '../../lib/types'
 import { Avatar, IconButton } from '../styled'
 import { Logout } from 'tabler-icons-react'
 import { useAuthContext } from '../../context/auth'

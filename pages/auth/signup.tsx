@@ -6,6 +6,7 @@ import * as Yup from 'yup'
 import { useRouter } from 'next/router'
 import { useState } from 'react'
 import { useAuthContext } from '../../context/auth'
+import { Shell } from '../../components/layout'
 
 const Container = styled('div', {
   display: 'flex',
@@ -26,6 +27,7 @@ export default function SignupPage() {
   const { signup } = useAuthContext()
   const router = useRouter()
   return (
+    <Shell>
     <Formik
       initialValues={{
         name: '',
@@ -92,5 +94,6 @@ export default function SignupPage() {
         </Container>
       )}
     </Formik>
+    </Shell>
   )
 }

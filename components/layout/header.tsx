@@ -1,9 +1,11 @@
 import Link from 'next/link';
 import * as React from 'react'
 import { styled } from "../../stitches.config";
-import { Button } from '../styled';
+import { Button, IconButton } from '../styled';
 import UserProfile from './profile'
 import { useAuthContext } from '../../context/auth';
+import { useThemeContext } from '../../context/theme';
+import { MoonStars } from 'tabler-icons-react'
 
 const Container = styled('div', {
   display: 'flex',
@@ -13,6 +15,7 @@ const Container = styled('div', {
 })
 const Icon = styled('a', {
   fontFamily: `'Inter', sans-serif`,
+  color: '$sand12',
   fontWeight: 'bold',
   fontSize: '28px',
   cursor: 'pointer',
@@ -26,6 +29,7 @@ const Flex = styled('div', {
 
 export const Header: React.FC = () => {
   const { loadingData, user } = useAuthContext()
+  const { toggle } = useThemeContext()
   let rightSide
   if (loadingData) {
     rightSide = (
@@ -46,6 +50,7 @@ export const Header: React.FC = () => {
           <Link href='/auth/signup' passHref>
             <Button as={'a'} color='dark'>Signup</Button>
           </Link>
+          <IconButton onClick={toggle}><MoonStars size={14} /></IconButton>
         </Flex>
       )
   }
@@ -59,3 +64,22 @@ export const Header: React.FC = () => {
   )
 }
 
+const ThemeSwichContainer = styled('div', {
+  position: 'absolute',
+  top: 0,
+  left: 0,
+  width: '100vw',
+  display: 'flex',
+  justifyContent: 'end',
+  alignItems: 'center', 
+  padding: '1.20em 1em',
+})
+
+export const ThemeSwich : React.FC = () => {
+  const { toggle } = useThemeContext()
+  return (
+    <ThemeSwichContainer>
+      <IconButton onClick={toggle}><MoonStars size={14} /></IconButton>
+    </ThemeSwichContainer>
+  )
+}

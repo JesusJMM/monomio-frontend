@@ -6,6 +6,7 @@ import * as Yup from 'yup'
 import { useRouter } from 'next/router'
 import { useState } from 'react'
 import { useAuthContext } from '../../context/auth'
+import { Shell } from '../../components/layout'
 
 const Container = styled('div', {
   display: 'flex',
@@ -26,61 +27,63 @@ export default function SignupPage() {
   const [errorMsg, setErrorMsg] = useState('')
   const router = useRouter()
   return (
-    <Formik
-      initialValues={{
-        name: '',
-        password: '',
-      }}
-      onSubmit={async (values) => {
-        if (login) {
-          const err = await login(values)
-          if (err) {
-            setErrorMsg(err)
-            return
+    <Shell>
+      <Formik
+        initialValues={{
+          name: '',
+          password: '',
+        }}
+        onSubmit={async (values) => {
+          if (login) {
+            const err = await login(values)
+            if (err) {
+              setErrorMsg(err)
+              return
+            }
           }
+          router.push('/')
+        }}
+        validationSchema={
+          Yup.object().shape({
+            name: Yup.string()
+              .required("Required"),
+            password: Yup.string()
+              .required("Required"),
+          })
         }
-        router.push('/')
-      }}
-      validationSchema={
-        Yup.object().shape({
-          name: Yup.string()
-            .required("Required"),
-          password: Yup.string()
-            .required("Required"),
-        })
-      }
-    >
-      {({ handleSubmit }) => (
-        <Container>
-          <Form onSubmit={handleSubmit}>
-            <Title position='center' order={'2'}>
-              Login
-            </Title>
-            {errorMsg && (
-              <HelpMsg color="red" position="center">
-                {errorMsg}
-              </HelpMsg>
-            )}
-            <TextInput
-              type="text"
-              label="Name"
-              name="name"
-              placeholder='Your Name'
-              required
-            />
-            <TextInput
-              name="password"
-              label="Password"
-              required
-              placeholder='Secret'
-            />
-            <Box css={{ display: 'flex', justifyContent: 'right' }}>
-              <Button type="submit" color='dark'>Submit</Button>
-            </Box>
-          </Form>
-        </Container>
-      )}
-    </Formik>
+      >
+        {({ handleSubmit }) => (
+          <Container>
+            <Form onSubmit={handleSubmit}>
+              <Title position='center' order={'2'}>
+                Login
+              </Title>
+              {errorMsg && (
+                <HelpMsg color="red" position="center">
+                  {errorMsg}
+                </HelpMsg>
+              )}
+              <TextInput
+                type="text"
+                label="Name"
+                name="name"
+                placeholder='Your Name'
+                required
+              />
+              <TextInput
+                name="password"
+                label="Password"
+                required
+                placeholder='Secret'
+              />
+              <Box css={{ display: 'flex', justifyContent: 'right' }}>
+                <Button type="submit" color='dark'>Submit</Button>
+              </Box>
+            </Form>
+          </Container>
+        )}
+      </Formik>
+    </Shell>
   )
 }
 
