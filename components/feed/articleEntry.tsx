@@ -1,90 +1,60 @@
 import * as React from 'react'
 import { styled } from '../../stitches.config'
-import { Title, Avatar, Text, Flex } from '../styled'
+import { Title, Avatar, Text, Flex, Container, Box } from '../styled'
 import type { ArticleFeed } from '../../lib/types'
 import Link from 'next/link'
 import format from 'date-fns/format'
 
-const Container = styled('div', {
-  padding: '1em',
-  display: 'flex',
-  flexDirection: 'column',
-  marginBottom: '.5em',
-  position: 'relative',
-  marginInline: '1em',
-  '@bp1': {
-    marginInline: 'auto',
-    maxWidth: 600,
-  },
-  borderBottom: '1px solid $gray7',
-})
-
-const Header = styled('a', {
-  display: 'flex',
-  justifyContent: 'left',
-  alignItems: 'center',
-  columnGap: '12px',
-  paddingBottom: '.5em',
+const Img = styled('img', {
+  width: '100%',
+  height: '100%',
+  objectFit: 'cover'
 })
 
 const ImgContainer = styled('div', {
-  display: 'flex',
-  placeContent: 'center',
   position: 'relative',
-  height: 80,
-  maxWidth: 80,
-  borderRadius: '8px',
-  boxShadow: '0 2px 16px -8px $gray9',
-  overflow: 'hidden',
-  margin: 'auto',
-  '@bp1': {
-    height: 140,
-    minWidth: 140,
-  },
-})
-
-const Img = styled('img', {
-  maxHeight: '100%',
-})
-
-const ContentContainer = styled('div', {
+  width: '120px',
+  height: '100px',
   display: 'flex',
-  flexDirection: 'row-reverse',
-  justifyContent: 'space-between',
-  gap: '1em',
+  justifyContent: 'center',
+  alignItems: 'center',
+  borderRadius: '8px',
+  overflow: 'hidden',
+  alignSelf: 'center',
 })
 
 export const ArticleEntry: React.FC<
   ArticleFeed & { withoutAuthor?: boolean }
 > = ({ article, author, withoutAuthor }) => {
   return (
-    <Container>
-      <ContentContainer>
-        <ImgContainer>
-          <Img src={article.smImg} />
-        </ImgContainer>
+    <Container css={{ marginBlock: '1em' }} padding='md'>
+      <Flex position='space' align='start'>
         <div>
-          <Header>
+          <Flex position='start'>
             {withoutAuthor || (
+              <>
               <Link href={`/${author.name}`} passHref>
-                <Flex as={'a'}>
+                <Flex as='a'>
                   <Avatar src={author.img} />
-                  <Text size='sm' color='gray' variant='anchor' >{author.name}</Text>
+                  <Text css={{fontWeight: '600'}} variant='anchor'>{author.name}</Text>
                 </Flex>
               </Link>
+              <Text size='sm' font='mono' color='gray'> · </Text>
+              </>
             )}
-            <Text size='sm' color="gray">{format(new Date(article.created_at), "MMM d")}</Text>
-          </Header>
+            <Text size='sm' font='mono' color='gray'>{format(new Date(article.updated_at), "MMM d")}</Text>
+          </Flex>
           <Link href={`/${author.name}/${article.slug}`} passHref>
-            <Title order='3' as={'a'} variant={'anchor'}>
-              {article.title}
-            </Title>
+            <Title order="3" css={{ marginTop: '.4em' }} as='a' variant='anchor'>{article.title}</Title>
           </Link>
-          <Text css={{ display: 'none', '@bp1': { display: 'block' } }} color="gray">
-            {article.desc}
-          </Text>
+          <Text color='gray' css={{ display: 'none', '@bp1': { display: 'block' } }}>{article.desc}</Text>
         </div>
-      </ContentContainer>
+        <Box css={{ alignSelf: 'center' }}>
+          <ImgContainer>
+            <Img src={article.smImg}></Img>
+          </ImgContainer>
+        </Box>
+      </Flex>
     </Container>
   )
 }

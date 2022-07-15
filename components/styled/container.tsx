@@ -6,16 +6,16 @@ export const Container = styled('div', {
   variants: {
     padding: {
       none: {
-        paddingInline: 0,
+        padding: 0,
       },
       sm: {
-        paddingInline: 8,
+        padding: 8,
       },
       md: {
-        paddingInline: '1em',
+        padding: '1em',
       },
       lg: {
-        paddingInline: '2em',
+        padding: '2em',
       },
     },
   },
@@ -29,15 +29,15 @@ export const Flex = styled('div', {
   gap: '6px',
   variants: {
     position: {
-      center: {
-        justifyContent: 'center',
-      },
-      end: {
-        justifyContent: 'end',
-      },
-      start: {
-        justifyContent: 'start',
-      },
+      center: { justifyContent: 'center', },
+      end: { justifyContent: 'end', },
+      start: { justifyContent: 'start', },
+      space: { justifyContent: 'space-between', }
+    },
+    align: {
+      center: { alignItems: 'center',},
+      end: { alignItems: 'end', },
+      start: { alignItems: 'start', },
     }
   },
 })

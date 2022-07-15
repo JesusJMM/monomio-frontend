@@ -3,7 +3,7 @@ import { styled } from "../../stitches.config"
 export const Text = styled('p', {
   fontFamily: `'Inter', sans-serif`,
   color: '$gray12',
-  fontSize: '16px',
+  fontSize: '14px',
   variants: {
     variant: {
       anchor: {
@@ -31,7 +31,7 @@ export const Text = styled('p', {
         fontSize: '10px',
       },
       sm: {
-        fontSize: '12px',
+        fontSize: '13px',
       },
       md: {
         fontSize: '14px',
@@ -53,6 +53,17 @@ export const Text = styled('p', {
       text: {
         fontFamily: "'Roboto', sans-serif",
       },
+      mono: {
+        fontFamily: "monospace",
+      },
+      'sans-serif': {
+        fontFamily: "sans-serif",
+      }
+    },
+    bold: {
+      true: {
+        fontWeight: 'bold'
+      }
     }
   }
 })
@@ -67,6 +78,8 @@ export const HelpMsg = styled(Text, {
 export const Title = styled(Text, {
   fontSize: '6vw',
   fontWeight: 'bold',
+  marginTop: '12px',
+  display: 'block',
   variants: {
     order: {
       1: {

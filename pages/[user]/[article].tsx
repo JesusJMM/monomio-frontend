@@ -6,6 +6,7 @@ import type { Article } from '../../lib/types'
 import Link from 'next/link'
 import Layout from '../../components/layout'
 import format from 'date-fns/format'
+import Head from 'next/head'
 
 export const getStaticPaths: GetStaticPaths = async () => {
   const paths = await getAllArticles()
@@ -44,6 +45,10 @@ export default function ArticlePage({
 }: Article) {
   console.log(article, author)
   return (
+    <>
+      <Head>
+        <title>{article.title}</title>
+      </Head>
     <Layout>
       <Container padding='md'>
         <Flex position='start' css={{ marginBottom: '1em' }}>
@@ -63,5 +68,6 @@ export default function ArticlePage({
         {article.content}
       </Container>
     </Layout>
+    </>
   )
 }

@@ -6,6 +6,8 @@ import { darkTheme, styled } from '../../stitches.config'
 const AppShell = styled('div', {
   minHeight: '100vh',
   backgroundColor: '$sand1',
+  color: '$sand12',
+  textRendering: 'optimizeLegibility',
 })
 
 const Layout: React.FC<React.PropsWithChildren> = ({children}) => {

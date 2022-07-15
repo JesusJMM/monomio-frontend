@@ -5,9 +5,6 @@ import { AuthProvider } from '../context/auth'
 import { ThemeProvider } from '../context/theme'
 
 const globalStyles = globalCss({
-  'body': {
-    backgroundColor: '$mauve2'
-  }
 })
 
 function MyApp({ Component, pageProps }: AppProps) {

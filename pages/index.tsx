@@ -5,7 +5,7 @@ import { ArticleEntry } from '../components/feed/articleEntry'
 import { getArticlePage } from '../lib/articles'
 import type { ArticleFeed } from '../lib/types'
 import Layout from '../components/layout'
-import { Title, Container } from '../components/styled'
+import { Title, Container, Box } from '../components/styled'
 
 type StaticProps = {
   articles: ArticleFeed[]
@@ -30,6 +30,7 @@ const Home: NextPage<StaticProps> = (props) => {
         <Title order='2'>Resent Posts</Title>
       </Container>
       {props.articles.map(a => <ArticleEntry key={a.article.id} {...a} /> )}
+      <Box css={{ padding: '5em'}}></Box>
     </Layout>
   )
 }

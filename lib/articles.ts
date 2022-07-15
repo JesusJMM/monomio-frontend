@@ -1,4 +1,4 @@
-import type { ArticleFeed, User } from './types'
+import type { ArticleFeed, User, Article } from './types'
 
 export async function getArticlePage(page: number): Promise<ArticleFeed[]> {
   const res = await fetch(`http://localhost:8080/api/articles/paginated?page=${page}`)
@@ -28,16 +28,17 @@ export async function getAuthorsAticles(authorName: string, page: number): Promi
   return articles
 }
 
-export async function getArticle(authorName: string, slug: string): Promise<ArticleFeed> {
+export async function getArticle(authorName: string, slug: string): Promise<Article> {
   const res = await fetch(`http://localhost:8080/api/article/${authorName}/${slug}`)
   const json = await res.json()
-  const articles: ArticleFeed = json.articles
-  return articles
+  console.log(json)
+  const article: Article = json
+  return article
 }
 
 export async function getAllArticles(): Promise<ArticleFeed[]> {
-  const res = await fetch(`http://localhost:8080/api/aricles/all`)
+  const res = await fetch(`http://localhost:8080/api/articles/all`)
   const json = await res.json()
-  const articles: ArticleFeed[] = json.aricles
+  const articles: ArticleFeed[] = json.articles
   return articles
 }
