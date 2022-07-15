@@ -1,11 +1,11 @@
 import Link from 'next/link';
 import * as React from 'react'
 import { styled } from "../../stitches.config";
-import { Button, IconButton } from '../styled';
+import { Button } from '../styled';
 import UserProfile from './profile'
 import { useAuthContext } from '../../context/auth';
 import { useThemeContext } from '../../context/theme';
-import { MoonStars } from 'tabler-icons-react'
+import ThemeButton from './themeButton'
 
 const Container = styled('div', {
   display: 'flex',
@@ -29,7 +29,6 @@ const Flex = styled('div', {
 
 export const Header: React.FC = () => {
   const { loadingData, user } = useAuthContext()
-  const { toggle } = useThemeContext()
   let rightSide
   if (loadingData) {
     rightSide = (
@@ -50,7 +49,7 @@ export const Header: React.FC = () => {
           <Link href='/auth/signup' passHref>
             <Button as={'a'} color='dark'>Signup</Button>
           </Link>
-          <IconButton onClick={toggle}><MoonStars size={14} /></IconButton>
+          <ThemeButton />
         </Flex>
       )
   }
@@ -75,11 +74,8 @@ const ThemeSwichContainer = styled('div', {
   padding: '1.20em 1em',
 })
 
-export const ThemeSwich : React.FC = () => {
-  const { toggle } = useThemeContext()
-  return (
+export const ThemeSwich : React.FC = () => (
     <ThemeSwichContainer>
-      <IconButton onClick={toggle}><MoonStars size={14} /></IconButton>
+      <ThemeButton />
     </ThemeSwichContainer>
-  )
-}
+)

@@ -3,26 +3,22 @@ import * as React from 'react'
 export type themeType = 'light' | 'dark'
 export type ThemeContextType = {
   theme: themeType,
-  toggle: () => void,
-  set: (theme: themeType) => void,
+  toggle: (value?: themeType) => void,
 }
 
 const defaults: ThemeContextType = {
   theme: 'light',
-  toggle: () => {},
-  set: (_: themeType) => {}
+  toggle: (_?: themeType) => {},
 }
 
 export const ThemeContext = React.createContext<ThemeContextType>(defaults)
 
-export const ThemeProvider: React.FC<React.PropsWithChildren> = ({children}) => {
-  const [theme, setTheme] = React.useState<themeType>('dark')
-  const toggle = () => setTheme(theme == 'light' ? 'dark' : 'light')
+export const ThemeProvider: React.FC<React.PropsWithChildren & { theme: themeType, toggleColorScheme: (value?: themeType) => void}> = 
+({children, theme, toggleColorScheme}) => {
   return (
     <ThemeContext.Provider value={{
       theme,
-      toggle,
-      set: setTheme,
+      toggle: toggleColorScheme,
     }}>
       {children}
     </ThemeContext.Provider>

@@ -5,6 +5,7 @@ import { Avatar, IconButton } from '../styled'
 import { Logout, MoonStars, Plus } from 'tabler-icons-react'
 import { useAuthContext } from '../../context/auth'
 import { useThemeContext } from '../../context/theme'
+import ThemeButton from './themeButton'
 
 const Container = styled('div', {
   display: 'flex',
@@ -28,7 +29,7 @@ const UserProfile: React.FC<{ user: User }> = ({ user }) => {
       <UserName>{user.name}</UserName>
       <IconButton onClick={logout} title="logout"><Logout size={14}/></IconButton>
       <IconButton><Plus size={14} /></IconButton>
-      <IconButton onClick={toggle}><MoonStars size={14} /></IconButton>
+      <ThemeButton />
     </Container>
   )
 }
